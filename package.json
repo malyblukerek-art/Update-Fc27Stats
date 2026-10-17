@@ -1,0 +1,50 @@
+
+{
+  "name": "fc27mojprojekt",
+  "version": "1.0.0",
+  "description": "Personalny tracker statystyk FC27 Ultimate Team",
+  "author": "Fc27Mojprojekt",
+  "license": "ISC",
+  "main": "main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis",
+    "release": "electron-builder --win nsis --publish always"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.9"
+  },
+  "devDependencies": {
+    "electron": "^44.9.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.fc27stats.app",
+    "productName": "Fc27Mojprojekt",
+    "directories": {
+      "output": "release"
+    },
+"files": [
+  "main.js",
+  "index.html",
+  "package.json"
+],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "malyblukerek-art",
+        "repo": "Update-Fc27Stats"
+      }
+    ]
+  }
+}

@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fc27Mojprojekt | Ultimate Hub</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #080a10;
+  --panel: #111520;
+  --line: #282f40;
+  --green: #c8ff45;
+  --text: #f4f5fa;
+  --muted: #9299ad;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 80% 0%, #182438 0%, transparent 38%),
+    radial-gradient(ellipse at 0% 40%, #20143b 0%, transparent 30%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, sans-serif;
+  min-height: 100vh;
+}
+
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 245px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: rgba(10,12,19,.92);
+  border-right: 1px solid var(--line);
+  padding: 28px 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.logo {
+  font: 900 20px Orbitron, sans-serif;
+  letter-spacing: -1px;
+  padding: 8px;
+}
+
+.logo span { color: var(--green); }
+
+.tag {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  padding: 0 10px;
+}
+
+.nav { display: grid; gap: 7px; }
+
+.nav button {
+  text-align: left;
+  color: #aab0c1;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 13px;
+  border-radius: 12px;
+  transition: .2s;
+}
+
+.nav button:hover, .nav button.active {
+  background: #1a202d;
+  border-color: #343d50;
+  color: white;
+}
+
+.nav button.active { box-shadow: inset 3px 0 var(--green); }
+.nav button span { margin-right: 10px; }
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg,#171d2b,#11131d);
+  border-radius: 15px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+main { min-width: 0; padding: 30px 4%; }
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+h1 {
+  font: 900 clamp(23px,3vw,36px) Orbitron,sans-serif;
+  margin: 8px 0;
+  letter-spacing: -1.5px;
+}
+
+.subtitle { color: var(--muted); font-size: 13px; }
+
+.season {
+  border: 1px solid #3c465a;
+  border-radius: 12px;
+  padding: 12px 15px;
+  background: #151a26;
+  color: var(--green);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #343b4d;
+  border-radius: 23px;
+  padding: clamp(24px,4vw,42px);
+  background:
+    radial-gradient(ellipse at 90% 50%, #37451e 0%, transparent 38%),
+    linear-gradient(110deg,#1c2231,#11141f 65%,#1d202b);
+  margin-bottom: 22px;
+}
+
+.hero:after {
+  content: "27";
+  position: absolute;
+  right: 4%;
+  top: -48px;
+  font: 900 clamp(150px,23vw,280px) Orbitron,sans-serif;
+  color: #c8ff45;
+  opacity: .045;
+  pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero h2 {
+  font: 900 clamp(23px,3vw,38px) Orbitron,sans-serif;
+  margin: 13px 0;
+}
+
+.hero p {
+  color: #b1b8c9;
+  max-width: 470px;
+  line-height: 1.7;
+  font-size: 13px;
+}
+
+.primary {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 17px;
+  background: var(--green);
+  color: #10140a;
+  font-weight: 900;
+  margin-top: 12px;
+}
+
+.primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 14px;
+  margin-bottom: 25px;
+}
+
+.stat, .panel {
+  background: linear-gradient(145deg,rgba(24,29,42,.96),rgba(15,18,28,.96));
+  border: 1px solid var(--line);
+  border-radius: 17px;
+}
+
+.stat { padding: 19px; }
+.stat-label { font-size: 11px; color: var(--muted); }
+.stat-number { font: 800 27px Orbitron,sans-serif; margin: 13px 0 7px; }
+.stat-number.green { color: var(--green); }
+.stat-foot { font-size: 10px; color: #7e879d; }
+
+.columns {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.panel { padding: 22px; min-width: 0; margin-bottom: 18px; }
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.panel h3 { font-size: 14px; margin: 0; }
+
+.pill {
+  font-size: 10px;
+  color: var(--green);
+  background: #27321a;
+  padding: 6px 9px;
+  border-radius: 7px;
+}
+
+.empty {
+  border: 1px dashed #363d50;
+  border-radius: 13px;
+  padding: 24px 14px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.player-card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 17px;
+  border: 1px solid #414a5f;
+  border-radius: 14px;
+  background: radial-gradient(circle at 0% 50%,#303e2b,transparent 70%),#191e2b;
+}
+
+.rating {
+  width: 69px;
+  height: 83px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 3px;
+  border: 1px solid #b8e54b;
+  border-radius: 10px;
+  background: linear-gradient(145deg,#d9ff70,#829f32);
+  color: #10150a;
+}
+
+.rating strong { font: 900 28px Orbitron,sans-serif; }
+.rating small { font-size: 9px; font-weight: 900; }
+.player-name { font-weight: 800; font-size: 17px; overflow-wrap: anywhere; }
+.player-meta { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+.entry { display: grid; gap: 10px; margin-top: 15px; }
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #343b4e;
+  background: #0d1019;
+  color: white;
+  border-radius: 9px;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus { border-color: var(--green); }
+textarea { resize: vertical; min-height: 70px; }
+
+label {
+  color: #aab1c3;
+  font-size: 11px;
+  display: grid;
+  gap: 7px;
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.secondary {
+  background: #202737;
+  border: 1px solid #343e52;
+  color: white;
+  border-radius: 9px;
+  padding: 11px;
+  font-weight: 700;
+}
+
+.record {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #252b3a;
+}
+
+.record:last-child { border-bottom: 0; }
+.record strong { font-size: 12px; }
+.record small { display: block; color: var(--muted); margin-top: 5px; font-size: 10px; overflow-wrap: anywhere; }
+.record-score { color: var(--green); font: 800 16px Orbitron,sans-serif; white-space: nowrap; }
+.delete { border: 0; background: transparent; color: #ef7889; font-size: 12px; }
+
+.section { display: none; }
+.section.active { display: block; animation: appear .3s ease; }
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+footer { text-align: center; color: #626a7d; font-size: 10px; padding: 20px; }
+
+/* ===== KARTY WYRÓŻNIEŃ GOLD / PURPLE / DIAMOND ===== */
+
+.award-popup {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  margin: 14px 0;
+  border-radius: 18px;
+  animation: awardEnter .65s cubic-bezier(.2,.9,.3,1.2);
+  isolation: isolate;
+}
+
+.award-popup::before {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  background: linear-gradient(115deg,transparent 42%,rgba(255,255,255,.2) 50%,transparent 58%);
+  animation: awardShine 5s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.award-popup.gold {
+  border: 1px solid #d9b45b;
+  background: radial-gradient(ellipse at top right,#8d6b264f,transparent 65%),linear-gradient(135deg,#282114,#11131b 70%);
+  box-shadow: 0 0 28px #d9b45b25,inset 0 0 25px #d9b45b0a;
+}
+
+.award-popup.purple {
+  border: 1px solid #b17aff;
+  background: radial-gradient(ellipse at top right,#a34dff52,transparent 65%),linear-gradient(135deg,#27163c,#11131d 70%);
+  box-shadow: 0 0 35px #a34dff30,inset 0 0 25px #a34dff10;
+}
+
+.award-popup.diamond {
+  border: 1px solid #8beeff;
+  background: radial-gradient(ellipse at top right,#6ae9ff55,transparent 60%),radial-gradient(ellipse at bottom left,#628eff2e,transparent 60%),linear-gradient(135deg,#112d3c,#11131d 75%);
+  box-shadow: 0 0 40px #63e8ff38,inset 0 0 28px #63e8ff12;
+}
+
+.award-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.award-rarity {
+  font: 800 10px Orbitron,sans-serif;
+  letter-spacing: 2px;
+}
+
+.gold .award-rarity { color: #f3d486; }
+.purple .award-rarity { color: #c9a2ff; }
+.diamond .award-rarity { color: #a8f4ff; }
+
+.award-emblem {
+  font-size: 32px;
+  filter: drop-shadow(0 0 9px currentColor);
+}
+
+.award-player {
+  font: 900 clamp(19px,3vw,28px) Orbitron,sans-serif;
+  margin: 17px 0 8px;
+  overflow-wrap: anywhere;
+}
+
+.gold .award-player { color: #f3d486; }
+.purple .award-player { color: #d7b4ff; }
+.diamond .award-player { color: #c6f8ff; text-shadow: 0 0 18px #6ae9ff75; }
+
+.award-description {
+  color: #c0c7d8;
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.award-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #ffffff20;
+}
+
+.award-rating { font: 900 25px Orbitron,sans-serif; }
+.gold .award-rating { color: #f3d486; }
+.purple .award-rating { color: #c9a2ff; }
+.diamond .award-rating { color: #a8f4ff; }
+
+.award-badge {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #f4f5fa;
+  background: #ffffff10;
+  border: 1px solid #ffffff20;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+@keyframes awardEnter {
+  from { opacity: 0; transform: translateY(20px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes awardShine {
+  0% { transform: translateX(-35%); }
+  100% { transform: translateX(35%); }
+}
+
+@media(max-width:1050px) {
+  .grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .columns { grid-template-columns: 1fr; }
+}
+
+@media(max-width:700px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { padding: 14px; gap: 12px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .nav { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .nav button { font-size: 11px; padding: 10px 6px; text-align: center; }
+  .nav button span { display: block; margin: 0 0 5px; }
+  .sidebar-bottom { display: none; }
+  main { padding: 22px 15px; }
+  .topbar { align-items: flex-start; }
+  .season { font-size: 9px; padding: 9px; }
+  .grid { gap: 9px; }
+  .stat { padding: 14px; }
+  .stat-number { font-size: 21px; }
+  .hero { padding: 25px 20px; }
+  .form-row { grid-template-columns: 1fr; }
+  .panel { padding: 16px; }
+  .award-popup { padding: 18px; }
+}
+</style>
+</head>
+
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="logo">FC27<span> HUB.</span></div>
+  <div class="tag">TWÓJ OSOBISTY ULTIMATE HUB</div>
+  <nav class="nav">
+    <button class="active" data-page="dashboard"><span>◈</span> Dashboard</button>
+    <button data-page="players"><span>⚽</span> Zawodnicy</button>
+    <button data-page="matches"><span>▤</span> Mecze</button>
+    <button data-page="packluck"><span>✦</span> Trafy</button>
+    <button data-page="awards"><span>♛</span> Wyróżnienia</button>
+    <button data-page="settings"><span>⚙</span> Ustawienia</button>
+  </nav>
+  <div class="sidebar-bottom"><div style="color:var(--green);font-weight:800;margin-bottom:8px">● SYSTEM ONLINE</div>Twoje centrum FC 27.<br>Dane zapisują się lokalnie w tej przeglądarce.</div>
+</aside>
+
+<main>
+<header class="topbar">
+  <div><div class="eyebrow">ULTIMATE TEAM / PERSONAL DATABASE</div><h1 id="pageTitle">TWÓJ SEZON.</h1><div class="subtitle">Wszystkie Twoje wyniki. Każdy traf. Jedno miejsce.</div></div>
+  <div class="season">SEZON 26/27 ✦</div>
+</header>
+
+<section class="section active" id="dashboard">
+  <div class="hero"><div class="hero-content"><div class="eyebrow">WELCOME TO YOUR CLUB</div><h2>ZAPISZ SWOJĄ<br>HISTORIĘ.</h2><p>Twoje najlepsze karty, legendarne trafy i statystyki z meczów. Stwórz własne archiwum drogi na szczyt.</p><button class="primary" onclick="goTo('matches')">＋ DODAJ WYNIK MECZU</button></div></div>
+  <div class="grid">
+    <div class="stat"><div class="stat-label">ROZEGRANE MECZE</div><div class="stat-number" id="totalMatches">0</div><div class="stat-foot">ZAPISANE W BAZIE</div></div>
+    <div class="stat"><div class="stat-label">ZWYCIĘSTWA</div><div class="stat-number green" id="wins">0</div><div class="stat-foot">TWOJE WYGRANE</div></div>
+    <div class="stat"><div class="stat-label">BILANS BRAMEK</div><div class="stat-number" id="goals">0:0</div><div class="stat-foot">STRZELONE : STRACONE</div></div>
+    <div class="stat"><div class="stat-label">ZAPISANE TRAFY</div><div class="stat-number" id="totalPacks">0</div><div class="stat-foot">PACZKI / PICKI</div></div>
+  </div>
+  <div class="columns">
+    <div class="panel"><div class="panel-heading"><h3>♛ ZAWODNIK DNIA</h3><span class="pill">MVP</span></div><div id="dailyPlayer" class="empty">Nie wybrano jeszcze zawodnika dnia.<br>Dodaj wyróżnienie w odpowiedniej zakładce.</div></div>
+    <div class="panel"><div class="panel-heading"><h3>✦ OSTATNIE TRAFY</h3><span class="pill">PACK LUCK</span></div><div id="recentPacks" class="empty">Twoje najlepsze trafy pojawią się tutaj.</div></div>
+  </div>
+  <div class="panel"><div class="panel-heading"><h3>▤ OSTATNIE MECZE</h3><span class="pill">MATCH HISTORY</span></div><div id="recentMatches" class="empty">Brak meczów. Zapisz swój pierwszy wynik!</div></div>
+</section>
+
+<section class="section" id="players">
+  <div class="panel"><div class="panel-heading"><h3>⚽ MOJE NAJLEPSZE KARTY</h3><span class="pill">PLAYER COLLECTION</span></div>
+    <div class="form-row"><label>Nazwa zawodnika<input id="playerName" placeholder="np. Kylian Mbappé"></label><label>Ocena karty<input id="playerRating" type="number" min="1" max="99" placeholder="np. 95"></label></div>
+    <div class="form-row" style="margin-top:10px"><label>Pozycja<input id="playerPosition" placeholder="np. N, ŚPO, LS"></label><label>Wersja karty<input id="playerVersion" placeholder="np. TOTY, TOTS, ICON"></label></div>
+    <button class="primary" onclick="addPlayer()">＋ DODAJ KARTĘ</button>
+  </div>
+  <div class="panel"><div class="panel-heading"><h3>MOJA KOLEKCJA</h3></div><div id="playerList" class="empty">Twoja kolekcja jest jeszcze pusta.</div></div>
+</section>
+
+<section class="section" id="matches">
+  <div class="panel"><div class="panel-heading"><h3>＋ ZAPISZ MECZ</h3><span class="pill">MATCH TRACKER</span></div><div class="entry">
+    <label>Przeciwnik<input id="opponent" placeholder="np. Gracz FUT Champions"></label>
+    <div class="form-row"><label>Twoje gole<input id="myGoals" type="number" min="0" value="0"></label><label>Gole rywala<input id="oppGoals" type="number" min="0" value="0"></label></div>
+    <div class="form-row"><label>Tryb<select id="matchMode"><option>Rivals</option><option>Champions</option><option>Squad Battles</option><option>Draft</option><option>Inny</option></select></label><label>Data<input id="matchDate" type="date"></label></div>
+    <button class="primary" onclick="addMatch()">ZAPISZ WYNIK</button>
+  </div></div>
+  <div class="panel"><div class="panel-heading"><h3>HISTORIA MECZÓW</h3></div><div id="matchList" class="empty">Brak zapisanych wyników.</div></div>
+</section>
+
+<section class="section" id="packluck">
+  <div class="panel"><div class="panel-heading"><h3>✦ LEGENDARNE TRAFY</h3><span class="pill">PACK LUCK</span></div><div class="entry">
+    <label>Zawodnik<input id="packPlayer" placeholder="np. Ronaldo Nazário"></label>
+    <div class="form-row"><label>Ocena<input id="packRating" type="number" min="1" max="99" placeholder="np. 97"></label><label>Rodzaj trafu<select id="packType"><option>Paczka</option><option>Player Pick</option><option>Upgrade</option><option>Draft</option><option>Inne</option></select></label></div>
+    <label>Opis trafu<textarea id="packDescription" placeholder="np. 10x84+, nie spodziewałem się tego!"></textarea></label>
+    <button class="primary" onclick="addPack()">✦ DODAJ TRAF</button>
+  </div></div>
+  <div class="panel"><div class="panel-heading"><h3>MOJE NAJLEPSZE TRAFY</h3></div><div id="packList" class="empty">Czekamy na pierwszą ikonę!</div></div>
+</section>
+
+<section class="section" id="awards">
+  <div class="panel"><div class="panel-heading"><h3>♛ TWOJE WYRÓŻNIENIA</h3><span class="pill">AWARD CENTER</span></div><div class="entry">
+    <label>Rodzaj wyróżnienia
+      <select id="awardType">
+        <option value="day">🥇 Zawodnik dnia — GOLD</option>
+        <option value="week">💜 Zawodnik tygodnia — PURPLE</option>
+        <option value="month">💎 Zawodnik miesiąca — DIAMOND</option>
+      </select>
+    </label>
+    <label>Nazwa zawodnika<input id="awardName" placeholder="np. Jude Bellingham"></label>
+    <div class="form-row"><label>Ocena (opcjonalnie)<input id="awardRating" type="number" min="1" max="99" placeholder="np. 96"></label><label>Okres / data<input id="awardPeriod" placeholder="np. 17 października"></label></div>
+    <label>Dlaczego ten zawodnik?<textarea id="awardReason" placeholder="Najlepszy występ, ważny gol, niesamowita karta..."></textarea></label>
+    <button class="primary" onclick="addAward()">♛ ODKRYJ WYRÓŻNIENIE</button>
+  </div></div>
+  <div class="panel"><div class="panel-heading"><h3>GALERIA WYRÓŻNIEŃ</h3><span class="pill">GOLD · PURPLE · DIAMOND</span></div><div id="awardList" class="empty">Dodaj zawodnika, aby stworzyć swoją pierwszą kartę.</div></div>
+</section>
+
+<section class="section" id="settings">
+  <div class="panel"><div class="panel-heading"><h3>⚙ USTAWIENIA PROJEKTU</h3></div>
+    <label>Nazwa Twojego klubu<input id="clubName" placeholder="Fc27Mojprojekt"></label><button class="primary" onclick="saveClub()">ZAPISZ NAZWĘ</button>
+    <hr style="border-color:var(--line);margin:25px 0"><h3>Eksport danych</h3><p class="subtitle">Zrób kopię zapasową swoich zawodników, meczów, trafów i wyróżnień.</p><button class="secondary" onclick="exportData()">↓ EKSPORTUJ JSON</button>
+    <hr style="border-color:var(--line);margin:25px 0"><h3>Reset danych</h3><p class="subtitle">Usuwa zapisane dane z tej przeglądarki.</p><button class="secondary" onclick="resetData()" style="color:#ff8393">USUŃ WSZYSTKIE DANE</button>
+  </div>
+</section>
+<footer>FC27MOJPROJEKT © 2026 · PERSONAL ULTIMATE HUB · NIEOFICJALNY PROJEKT FANOWSKI</footer>
+</main>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const defaults = {club:"Fc27Mojprojekt",players:[],matches:[],packs:[],awards:[]};
+let data;
+
+try {
+  data = {...defaults,...JSON.parse(localStorage.getItem("fc27hub") || "{}")};
+} catch {
+  data = {...defaults,players:[],matches:[],packs:[],awards:[]};
+}
+
+function save() {
+  localStorage.setItem("fc27hub",JSON.stringify(data));
+  render();
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g,char=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[char]);
+}
+
+function goTo(page) {
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  $(page).classList.add("active");
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+
+  const titles = {
+    dashboard:"TWÓJ SEZON.",players:"TWOJE KARTY.",
+    matches:"TWOJE MECZE.",packluck:"PACK LUCK.",
+    awards:"MVP CENTER.",settings:"USTAWIENIA."
+  };
+
+  $("pageTitle").textContent = titles[page];
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.querySelectorAll(".nav button").forEach(button=>{
+  button.addEventListener("click",()=>goTo(button.dataset.page));
+});
+
+function addPlayer() {
+  const name=$("playerName").value.trim(),rating=Number($("playerRating").value);
+  if(!name||rating<1||rating>99)return alert("Wpisz nazwę zawodnika i ocenę od 1 do 99.");
+
+  data.players.unshift({
+    id:crypto.randomUUID(),name,rating,
+    position:$("playerPosition").value.trim()||"—",
+    version:$("playerVersion").value.trim()||"STANDARD"
+  });
+
+  ["playerName","playerRating","playerPosition","playerVersion"].forEach(id=>$(id).value="");
+  save();
+}
+
+function addMatch() {
+  const opponent=$("opponent").value.trim();
+  const mine=Number($("myGoals").value),theirs=Number($("oppGoals").value);
+
+  if(!opponent||$("myGoals").value===""||$("oppGoals").value===""||
+     !Number.isInteger(mine)||!Number.isInteger(theirs)||mine<0||theirs<0)
+    return alert("Podaj przeciwnika i poprawny wynik meczu.");
+
+  data.matches.unshift({
+    id:crypto.randomUUID(),opponent,mine,theirs,
+    mode:$("matchMode").value,
+    date:$("matchDate").value||new Date().toISOString().slice(0,10)
+  });
+
+  $("opponent").value="";
+  $("myGoals").value="0";
+  $("oppGoals").value="0";
+  save();
+}
+
+function addPack() {
+  const name=$("packPlayer").value.trim(),rating=Number($("packRating").value);
+  if(!name||rating<1||rating>99)return alert("Podaj zawodnika i ocenę od 1 do 99.");
+
+  data.packs.unshift({
+    id:crypto.randomUUID(),name,rating,type:$("packType").value,
+    description:$("packDescription").value.trim(),
+    date:new Date().toLocaleDateString("pl-PL")
+  });
+
+  ["packPlayer","packRating","packDescription"].forEach(id=>$(id).value="");
+  save();
+}
+
+function addAward() {
+  const name=$("awardName").value.trim(),rating=$("awardRating").value;
+  if(!name)return alert("Wpisz nazwę zawodnika.");
+  if(rating&&(Number(rating)<1||Number(rating)>99))return alert("Ocena musi być od 1 do 99.");
+
+  data.awards.unshift({
+    id:crypto.randomUUID(),type:$("awardType").value,name,rating,
+    period:$("awardPeriod").value.trim(),
+    reason:$("awardReason").value.trim()
+  });
+
+  ["awardName","awardRating","awardPeriod","awardReason"].forEach(id=>$(id).value="");
+  save();
+  goTo("awards");
+}
+
+function removeItem(collection,id) {
+  if(!confirm("Na pewno usunąć ten wpis?"))return;
+  data[collection]=data[collection].filter(item=>item.id!==id);
+  save();
+}
+
+function record(title,subtitle,score,collection,id) {
+  return `<div class="record">
+    <div><strong>${escapeHTML(title)}</strong><small>${escapeHTML(subtitle)}</small></div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span class="record-score">${escapeHTML(score)}</span>
+      <button class="delete" onclick="removeItem('${collection}','${id}')">Usuń</button>
+    </div>
+  </div>`;
+}
+
+function records(items,collection,formatter) {
+  if(!items.length)return '<div class="empty">Brak wpisów. Dodaj pierwszy!</div>';
+  return items.map(item=>record(...formatter(item),collection,item.id)).join("");
+}
+
+/* Tworzy kartę zależnie od wybranego wyróżnienia */
+function awardCard(award) {
+  const styles = {
+    day:{
+      rarity:"GOLD EDITION",icon:"♛",className:"gold",
+      badge:"PLAYER OF THE DAY",title:"ZAWODNIK DNIA"
+    },
+    week:{
+      rarity:"PURPLE EDITION",icon:"✦",className:"purple",
+      badge:"PLAYER OF THE WEEK",title:"ZAWODNIK TYGODNIA"
+    },
+    month:{
+      rarity:"DIAMOND EDITION",icon:"💎",className:"diamond",
+      badge:"PLAYER OF THE MONTH",title:"ZAWODNIK MIESIĄCA"
+    }
+  };
+
+  const s=styles[award.type]||styles.day;
+
+  return `
+    <div class="award-popup ${s.className}">
+      <div class="award-top">
+        <div>
+          <div class="award-rarity">${s.rarity}</div>
+          <div class="award-rarity" style="margin-top:7px;opacity:.8">${s.title}</div>
+        </div>
+        <div class="award-emblem">${s.icon}</div>
+      </div>
+      <div class="award-player">${escapeHTML(award.name)}</div>
+      <div class="award-description">${escapeHTML(award.reason||"Wyróżniony zawodnik Twojego klubu.")}</div>
+      <div class="award-bottom">
+        <div>
+          <div class="award-rarity">${escapeHTML(award.period||"SEZON 26/27")}</div>
+          <div class="award-rating">${escapeHTML(award.rating||"MVP")} ${award.rating?"OVR":""}</div>
+        </div>
+        <div class="award-badge">${s.badge}</div>
+      </div>
+    </div>`;
+}
+
+function render() {
+  const matches=data.matches;
+  const wins=matches.filter(m=>m.mine>m.theirs).length;
+  const scored=matches.reduce((s,m)=>s+m.mine,0);
+  const conceded=matches.reduce((s,m)=>s+m.theirs,0);
+
+  $("totalMatches").textContent=matches.length;
+  $("wins").textContent=wins;
+  $("goals").textContent=`${scored}:${conceded}`;
+  $("totalPacks").textContent=data.packs.length;
+  $("clubName").value=data.club;
+
+  $("playerList").className=data.players.length?"":"empty";
+  $("playerList").innerHTML=data.players.length?data.players.map(p=>`
+    <div class="player-card" style="margin-bottom:12px">
+      <div class="rating"><strong>${escapeHTML(p.rating)}</strong><small>RATING</small></div>
+      <div style="flex:1;min-width:0">
+        <div class="player-name">${escapeHTML(p.name)}</div>
+        <div class="player-meta">${escapeHTML(p.position)} · ${escapeHTML(p.version)}</div>
+      </div>
+      <button class="delete" onclick="removeItem('players','${p.id}')">Usuń</button>
+    </div>`).join(""):"Twoja kolekcja jest jeszcze pusta.";
+
+  $("matchList").innerHTML=records(data.matches,"matches",m=>[
+    `vs ${m.opponent}`,`${m.mode} · ${m.date}`,`${m.mine}:${m.theirs}`
+  ]);
+
+  $("packList").innerHTML=records(data.packs,"packs",p=>[
+    p.name,`${p.type} · ${p.date}${p.description?" · "+p.description:""}`,p.rating
+  ]);
+
+  /* Galerie kart: złote, fioletowe i diamentowe */
+  $("awardList").innerHTML=data.awards.length
+    ?data.awards.map(a=>`
+      ${awardCard(a)}
+      <button class="delete" style="margin:0 0 18px"
+        onclick="removeItem('awards','${a.id}')">✕ Usuń wyróżnienie</button>
+    `).join("")
+    :'<div class="empty">Dodaj zawodnika, aby stworzyć swoją pierwszą kartę.</div>';
+
+  /* Dashboard pokazuje najnowszego zawodnika dnia */
+  const best=data.awards.find(a=>a.type==="day");
+  $("dailyPlayer").className=best?"":"empty";
+  $("dailyPlayer").innerHTML=best
+    ?awardCard(best)
+    :"Nie wybrano jeszcze zawodnika dnia.<br>Dodaj wyróżnienie w odpowiedniej zakładce.";
+
+  $("recentPacks").innerHTML=records(data.packs.slice(0,3),"packs",p=>[
+    p.name,`${p.type} · ${p.date}`,p.rating
+  ]);
+
+  $("recentMatches").innerHTML=records(data.matches.slice(0,5),"matches",m=>[
+    `vs ${m.opponent}`,`${m.mode} · ${m.date}`,`${m.mine}:${m.theirs}`
+  ]);
+}
+
+function saveClub() {
+  const name=$("clubName").value.trim();
+  if(!name)return alert("Nazwa klubu nie może być pusta.");
+  data.club=name;
+  save();
+  alert("Zapisano nazwę projektu!");
+}
+
+function exportData() {
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download="Fc27Mojprojekt-backup.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function resetData() {
+  if(!confirm("To usunie wszystkie zapisane karty, mecze, trafy i wyróżnienia. Kontynuować?"))return;
+  data={...defaults,players:[],matches:[],packs:[],awards:[]};
+  save();
+}
+
+$("matchDate").value=new Date().toISOString().slice(0,10);
+render();
+</script>
+</body>
+</html>
