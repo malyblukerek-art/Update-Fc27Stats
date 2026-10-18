@@ -525,7 +525,7 @@ footer { text-align: center; color: #626a7d; font-size: 10px; padding: 20px; }
 
 <section class="section" id="players">
   <div class="panel"><div class="panel-heading"><h3>⚽ MOJE NAJLEPSZE KARTY</h3><span class="pill">PLAYER COLLECTION</span></div>
-    <div class="form-row"><label>Nazwa zawodnika<input id="playerName" placeholder="np. Kylian Mbappé"></label><label>Ocena karty<input id="playerRating" type="number" min="1" max="99" placeholder="np. 95"></label></div>
+    <div class="form-row"><label>Nazwa zawodnika<input id="playerName" placeholder="np. Kylian Mbappé"><button type="button" class="secondary" onclick="searchFutgg('playerName')">🔎 Wyszukaj kartę</button></label><label>Ocena karty<input id="playerRating" type="number" min="1" max="99" placeholder="np. 95"></label></div>
     <div class="form-row" style="margin-top:10px"><label>Pozycja<input id="playerPosition" placeholder="np. N, ŚPO, LS"></label><label>Wersja karty<input id="playerVersion" placeholder="np. TOTY, TOTS, ICON"></label></div><label class="fc-card-url-input">Link do grafiki oryginalnej karty (opcjonalnie)<input id="playerImageUrl" type="url" placeholder="Wklej bezpośredni link do obrazka karty z FUT.GG"></label>
     <button class="primary" onclick="addPlayer()">＋ DODAJ KARTĘ</button>
   </div>
@@ -577,7 +577,7 @@ footer { text-align: center; color: #626a7d; font-size: 10px; padding: 20px; }
  <div class="market-note">Ceny konsolowe i dane kart sprawdzaj w <a class="market-source" href="https://www.fut.gg/players/" target="_blank" rel="noopener">FUT.GG — FC 27 Players</a>. PS4, PS5 i Xbox korzystają ze wspólnego rynku. W tej wersji cena nie jest pobierana automatycznie, więc każdą wartość trzeba potwierdzić w źródle.</div>
  </div>
  <div class="panel"><div class="panel-heading"><h3>DODAJ KARTĘ DO PORÓWNANIA</h3><span class="pill">TWOJA LISTA</span></div>
- <div class="market-form"><label>Nazwa karty<input id="marketName" maxlength="80" placeholder="np. Kylian Mbappé"></label><label>Pozycja<select id="marketCardPosition"><option>BR</option><option>PO</option><option>ŚO</option><option>LO</option><option>ŚPD</option><option>ŚP</option><option>ŚPO</option><option>PP</option><option>LP</option><option>N</option></select></label><label>Ocena<input id="marketCardRating" type="number" min="1" max="99" inputmode="numeric" placeholder="np. 91"></label><label>Cena konsolowa (coins)<input id="marketCardPrice" type="number" min="0" step="100" inputmode="numeric" placeholder="sprawdź na FUT.GG"></label><label>Liga<input id="marketCardLeague" maxlength="50" placeholder="Liga"></label><label>Kraj / klub<input id="marketCardNation" maxlength="60" placeholder="Kraj lub klub"></label></div>
+ <div class="market-form"><label>Nazwa karty<input id="marketName" maxlength="80" placeholder="np. Kylian Mbappé"><button type="button" class="secondary" onclick="searchFutgg('marketName')">🔎 Wyszukaj kartę</button></label><label>Pozycja<select id="marketCardPosition"><option>BR</option><option>PO</option><option>ŚO</option><option>LO</option><option>ŚPD</option><option>ŚP</option><option>ŚPO</option><option>PP</option><option>LP</option><option>N</option></select></label><label>Ocena<input id="marketCardRating" type="number" min="1" max="99" inputmode="numeric" placeholder="np. 91"></label><label>Cena konsolowa (coins)<input id="marketCardPrice" type="number" min="0" step="100" inputmode="numeric" placeholder="sprawdź na FUT.GG"></label><label>Liga<input id="marketCardLeague" maxlength="50" placeholder="Liga"></label><label>Kraj / klub<input id="marketCardNation" maxlength="60" placeholder="Kraj lub klub"></label></div>
  <div class="market-actions"><button class="primary" onclick="marketAddCard()">＋ DODAJ KARTĘ</button><button class="secondary" onclick="marketClearCards()">WYCZYŚĆ LISTĘ</button></div><div id="marketResults" class="market-list"><div class="empty">Dodaj kilka kart i ustaw budżet, aby zobaczyć polecenia.</div></div>
  </div>
 </section>
@@ -636,7 +636,7 @@ document.querySelectorAll(".nav button").forEach(button=>{
 
 
 function validCardImageUrl(value){const v=String(value||'').trim();if(!v)return '';try{const u=new URL(v);return (u.protocol==='https:'||u.protocol==='http:')?u.href:'';}catch(e){return '';}}
-function futggSearchUrl(name){return 'https://www.fut.gg/players/?search='+encodeURIComponent(String(name||''));}
+function futggSearchUrl(name){return 'https://www.fut.gg/players/?search='+encodeURIComponent(String(name||''));} function searchFutgg(inputId){const input=$(inputId);const name=input?input.value.trim():'';if(!name){alert('Najpierw wpisz imię i nazwisko zawodnika.');if(input)input.focus();return;}const url=futggSearchUrl(name);const tab=window.open(url,'_blank','noopener,noreferrer');if(!tab)window.location.href=url;}
 function cardArtwork(item){const image=validCardImageUrl(item&&item.imageUrl);return `<div class="fc-card-art">${image?`<img src="${escapeHTML(image)}" alt="Karta FC 27 — ${escapeHTML(item.name||'zawodnik')}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`:''}<span class="fc-card-silhouette" style="${image?'display:none;':''}" aria-hidden="true">♟</span></div>`;}
 
 function addPlayer() {
