@@ -27,7 +27,7 @@ jobs:
         shell: pwsh
         run: |
           $env:PKG_VERSION = node -p "require('./package.json').version"
-          @'
+          $script = @'
           const fs = require('fs');
           const crypto = require('crypto');
           const version = process.env.PKG_VERSION;
@@ -39,7 +39,8 @@ jobs:
           const yml = `version: ${version}\nfiles:\n  - url: ${exe}\n    sha512: ${sha512}\n    size: ${bytes.length}\npath: ${exe}\nsha512: ${sha512}\nreleaseDate: '${new Date().toISOString()}'\n`;
           fs.writeFileSync(`${dir}/latest.yml`, yml);
           console.log(`Created latest.yml for ${exe} (${bytes.length} bytes)`);
-          '@ | node
+          '@
+          $script | node
       - name: Publish installer to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
