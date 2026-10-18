@@ -22,7 +22,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build Windows installer
-        run: npx electron-builder --win nsis
+        run: npx electron-builder --win nsis --publish never
+      - name: Create updater metadata
+        shell: pwsh
+        run: |
+          $env:PKG_VERSION = node -p "require('./package.json').version"
+          @'
+          const fs = require('fs');
+          const crypto = require('crypto');
+          const version = process.env.PKG_VERSION;
+          const dir = 'release';
+          const exe = fs.readdirSync(dir).find(f => f.toLowerCase().endsWith('.exe'));
+          if (!exe) throw new Error('Windows installer EXE was not generated');
+          const bytes = fs.readFileSync(`${dir}/${exe}`);
+          const sha512 = crypto.createHash('sha512').update(bytes).digest('base64');
+          const yml = `version: ${version}\nfiles:\n  - url: ${exe}\n    sha512: ${sha512}\n    size: ${bytes.length}\npath: ${exe}\nsha512: ${sha512}\nreleaseDate: '${new Date().toISOString()}'\n`;
+          fs.writeFileSync(`${dir}/latest.yml`, yml);
+          console.log(`Created latest.yml for ${exe} (${bytes.length} bytes)`);
+          '@ | node
       - name: Publish installer to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
