@@ -469,6 +469,19 @@ footer { text-align: center; color: #626a7d; font-size: 10px; padding: 20px; }
 .market-player h4{margin:0 0 5px;font-size:14px}.market-meta{font-size:12px;color:var(--muted);line-height:1.7}.market-price{font-weight:900;color:var(--green);font-size:17px;white-space:nowrap}.market-fit{font-size:11px;color:#c6d0df;margin-top:5px}.market-note{font-size:12px;color:var(--muted);line-height:1.7}.market-source{color:var(--green);text-decoration:underline;text-underline-offset:3px;font-size:12px}
 @media(max-width:700px){.market-form{grid-template-columns:repeat(2,minmax(0,1fr))}.market-player{grid-template-columns:minmax(0,1fr)}.market-price{font-size:16px}}
 
+
+/* FC27 card artwork / portrait */
+.fc-card-art{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;width:100%;min-height:118px;margin:10px 0 8px;border-radius:12px;background:radial-gradient(ellipse at 50% 35%,#f7e6b455,transparent 45%),linear-gradient(155deg,#e9d7a8 0%,#c8b16d 42%,#77623c 100%);border:1px solid #fff7d566;isolation:isolate}
+.fc-card-art:before{content:"FC 27";position:absolute;top:8px;left:9px;font-size:9px;font-weight:1000;letter-spacing:1.5px;color:#fff9;z-index:2}
+.fc-card-art:after{content:"UT";position:absolute;right:8px;bottom:4px;font-size:25px;font-weight:1000;color:#fff2;z-index:0}
+.fc-card-art img{position:relative;z-index:1;display:block;width:100%;height:150px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 4px 5px #0005)}
+.fc-card-silhouette{font-size:64px;line-height:1;color:#f9f1d9dd;text-shadow:0 4px 12px #0005;z-index:1}
+.fc-card-link{display:inline-block;margin-top:5px;color:var(--blue);font-size:11px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.fc-card-url-input{margin-top:8px!important}
+.award-art-wrap{width:min(100%,210px);margin:12px auto 14px}
+.award-art-wrap .fc-card-art{min-height:145px}
+.award-art-wrap .fc-card-art img{height:180px}
+
 </style>
 </head>
 
@@ -513,7 +526,7 @@ footer { text-align: center; color: #626a7d; font-size: 10px; padding: 20px; }
 <section class="section" id="players">
   <div class="panel"><div class="panel-heading"><h3>⚽ MOJE NAJLEPSZE KARTY</h3><span class="pill">PLAYER COLLECTION</span></div>
     <div class="form-row"><label>Nazwa zawodnika<input id="playerName" placeholder="np. Kylian Mbappé"></label><label>Ocena karty<input id="playerRating" type="number" min="1" max="99" placeholder="np. 95"></label></div>
-    <div class="form-row" style="margin-top:10px"><label>Pozycja<input id="playerPosition" placeholder="np. N, ŚPO, LS"></label><label>Wersja karty<input id="playerVersion" placeholder="np. TOTY, TOTS, ICON"></label></div>
+    <div class="form-row" style="margin-top:10px"><label>Pozycja<input id="playerPosition" placeholder="np. N, ŚPO, LS"></label><label>Wersja karty<input id="playerVersion" placeholder="np. TOTY, TOTS, ICON"></label></div><label class="fc-card-url-input">Link do grafiki oryginalnej karty (opcjonalnie)<input id="playerImageUrl" type="url" placeholder="Wklej bezpośredni link do obrazka karty z FUT.GG"></label>
     <button class="primary" onclick="addPlayer()">＋ DODAJ KARTĘ</button>
   </div>
   <div class="panel"><div class="panel-heading"><h3>MOJA KOLEKCJA</h3></div><div id="playerList" class="empty">Twoja kolekcja jest jeszcze pusta.</div></div>
@@ -533,7 +546,7 @@ footer { text-align: center; color: #626a7d; font-size: 10px; padding: 20px; }
   <div class="panel"><div class="panel-heading"><h3>✦ LEGENDARNE TRAFY</h3><span class="pill">PACK LUCK</span></div><div class="entry">
     <label>Zawodnik<input id="packPlayer" placeholder="np. Ronaldo Nazário"></label>
     <div class="form-row"><label>Ocena<input id="packRating" type="number" min="1" max="99" placeholder="np. 97"></label><label>Rodzaj trafu<select id="packType"><option>Paczka</option><option>Player Pick</option><option>Upgrade</option><option>Draft</option><option>Inne</option></select></label></div>
-    <label>Opis trafu<textarea id="packDescription" placeholder="np. 10x84+, nie spodziewałem się tego!"></textarea></label>
+    <label>Opis trafu<textarea id="packDescription" placeholder="np. 10x84+, nie spodziewałem się tego!"></textarea></label><label class="fc-card-url-input">Link do grafiki karty (opcjonalnie)<input id="packImageUrl" type="url" placeholder="Wklej bezpośredni link do obrazka karty"></label>
     <button class="primary" onclick="addPack()">✦ DODAJ TRAF</button>
   </div></div>
   <div class="panel"><div class="panel-heading"><h3>MOJE NAJLEPSZE TRAFY</h3></div><div id="packList" class="empty">Czekamy na pierwszą ikonę!</div></div>
@@ -550,7 +563,7 @@ footer { text-align: center; color: #626a7d; font-size: 10px; padding: 20px; }
     </label>
     <label>Nazwa zawodnika<input id="awardName" placeholder="np. Jude Bellingham"></label>
     <div class="form-row"><label>Ocena (opcjonalnie)<input id="awardRating" type="number" min="1" max="99" placeholder="np. 96"></label><label>Okres / data<input id="awardPeriod" placeholder="np. 17 października"></label></div>
-    <label>Dlaczego ten zawodnik?<textarea id="awardReason" placeholder="Najlepszy występ, ważny gol, niesamowita karta..."></textarea></label>
+    <label>Dlaczego ten zawodnik?<textarea id="awardReason" placeholder="Najlepszy występ, ważny gol, niesamowita karta..."></textarea></label><label class="fc-card-url-input">Link do grafiki oryginalnej karty (opcjonalnie)<input id="awardImageUrl" type="url" placeholder="Wklej bezpośredni link do obrazka karty z FUT.GG"></label>
     <button class="primary" onclick="addAward()">♛ ODKRYJ WYRÓŻNIENIE</button>
   </div></div>
   <div class="panel"><div class="panel-heading"><h3>GALERIA WYRÓŻNIEŃ</h3><span class="pill">GOLD · PURPLE · DIAMOND</span></div><div id="awardList" class="empty">Dodaj zawodnika, aby stworzyć swoją pierwszą kartę.</div></div>
@@ -621,6 +634,11 @@ document.querySelectorAll(".nav button").forEach(button=>{
   button.addEventListener("click",()=>goTo(button.dataset.page));
 });
 
+
+function validCardImageUrl(value){const v=String(value||'').trim();if(!v)return '';try{const u=new URL(v);return (u.protocol==='https:'||u.protocol==='http:')?u.href:'';}catch(e){return '';}}
+function futggSearchUrl(name){return 'https://www.fut.gg/players/?search='+encodeURIComponent(String(name||''));}
+function cardArtwork(item){const image=validCardImageUrl(item&&item.imageUrl);return `<div class="fc-card-art">${image?`<img src="${escapeHTML(image)}" alt="Karta FC 27 — ${escapeHTML(item.name||'zawodnik')}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`:''}<span class="fc-card-silhouette" style="${image?'display:none;':''}" aria-hidden="true">♟</span></div>`;}
+
 function addPlayer() {
   const name=$("playerName").value.trim(),rating=Number($("playerRating").value);
   if(!name||rating<1||rating>99)return alert("Wpisz nazwę zawodnika i ocenę od 1 do 99.");
@@ -628,10 +646,10 @@ function addPlayer() {
   data.players.unshift({
     id:crypto.randomUUID(),name,rating,
     position:$("playerPosition").value.trim()||"—",
-    version:$("playerVersion").value.trim()||"STANDARD"
+    version:$("playerVersion").value.trim()||"STANDARD",imageUrl:validCardImageUrl($("playerImageUrl").value)
   });
 
-  ["playerName","playerRating","playerPosition","playerVersion"].forEach(id=>$(id).value="");
+  ["playerName","playerRating","playerPosition","playerVersion","playerImageUrl"].forEach(id=>$(id).value="");
   save();
 }
 
@@ -661,11 +679,11 @@ function addPack() {
 
   data.packs.unshift({
     id:crypto.randomUUID(),name,rating,type:$("packType").value,
-    description:$("packDescription").value.trim(),
+    description:$("packDescription").value.trim(),imageUrl:validCardImageUrl($("packImageUrl").value),
     date:new Date().toLocaleDateString("pl-PL")
   });
 
-  ["packPlayer","packRating","packDescription"].forEach(id=>$(id).value="");
+  ["packPlayer","packRating","packDescription","packImageUrl"].forEach(id=>$(id).value="");
   save();
 }
 
@@ -677,10 +695,10 @@ function addAward() {
   data.awards.unshift({
     id:crypto.randomUUID(),type:$("awardType").value,name,rating,
     period:$("awardPeriod").value.trim(),
-    reason:$("awardReason").value.trim()
+    reason:$("awardReason").value.trim(),imageUrl:validCardImageUrl($("awardImageUrl").value)
   });
 
-  ["awardName","awardRating","awardPeriod","awardReason"].forEach(id=>$(id).value="");
+  ["awardName","awardRating","awardPeriod","awardReason","awardImageUrl"].forEach(id=>$(id).value="");
   save();
   goTo("awards");
 }
@@ -734,7 +752,7 @@ function awardCard(award) {
         </div>
         <div class="award-emblem">${s.icon}</div>
       </div>
-      <div class="award-player">${escapeHTML(award.name)}</div>
+      <div class="award-art-wrap">${cardArtwork(award)}</div><div class="award-player">${escapeHTML(award.name)}</div><a class="fc-card-link" href="${futggSearchUrl(award.name)}" target="_blank" rel="noopener">Znajdź oryginalną kartę na FUT.GG ↗</a>
       <div class="award-description">${escapeHTML(award.reason||"Wyróżniony zawodnik Twojego klubu.")}</div>
       <div class="award-bottom">
         <div>
@@ -763,7 +781,7 @@ function render() {
     <div class="player-card" style="margin-bottom:12px">
       <div class="rating"><strong>${escapeHTML(p.rating)}</strong><small>RATING</small></div>
       <div style="flex:1;min-width:0">
-        <div class="player-name">${escapeHTML(p.name)}</div>
+        ${cardArtwork(p)}<div class="player-name">${escapeHTML(p.name)}</div><a class="fc-card-link" href="${futggSearchUrl(p.name)}" target="_blank" rel="noopener">Znajdź oryginalną kartę na FUT.GG ↗</a>
         <div class="player-meta">${escapeHTML(p.position)} · ${escapeHTML(p.version)}</div>
       </div>
       <button class="delete" onclick="removeItem('players','${p.id}')">Usuń</button>
@@ -773,9 +791,7 @@ function render() {
     `vs ${m.opponent}`,`${m.mode} · ${m.date}`,`${m.mine}:${m.theirs}`
   ]);
 
-  $("packList").innerHTML=records(data.packs,"packs",p=>[
-    p.name,`${p.type} · ${p.date}${p.description?" · "+p.description:""}`,p.rating
-  ]);
+  $("packList").innerHTML=data.packs.length?data.packs.map(p=>`<div class="record pack-card-record"><div style="width:90px;flex-shrink:0">${cardArtwork(p)}</div><div style="min-width:0;flex:1"><strong>${escapeHTML(p.name)}</strong><small>${escapeHTML(p.type||"Traf")} · ${escapeHTML(p.date||"")}${p.description?" · "+escapeHTML(p.description):""}</small><a class="fc-card-link" href="${futggSearchUrl(p.name)}" target="_blank" rel="noopener">Znajdź oryginalną kartę na FUT.GG ↗</a></div><span class="record-score">${escapeHTML(p.rating||"—")}</span><button class="delete" onclick="removeItem('packs','${p.id}')">Usuń</button></div>`).join(""):'<div class="empty">Czekamy na pierwszą ikonę!</div>';
 
   /* Galerie kart: złote, fioletowe i diamentowe */
   $("awardList").innerHTML=data.awards.length
